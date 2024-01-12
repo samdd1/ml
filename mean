@@ -21,7 +21,7 @@ def mode(arr):
     return(modes)
 result = mode(arr)
 print("Mode:", result)
-Mode: [122.3]
+
 def sd(arr):
     n = len(arr)
     mean = sum(arr) / n
