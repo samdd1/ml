@@ -1,0 +1,37 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+df = pd.read_csv('/content/iris(For PCA Program) (1).csv')
+print(df.shape)
+
+X = df.iloc[:, :-1].values
+y = df.iloc[:,-1].values
+# Standardize the data
+X_mean = np.mean(X, axis=0)
+X_std = np.std(X, axis=0)
+X_standardized = (X - X_mean) / X_std
+print(X_standardized.shape)
+
+# Calculate the covariance matrix
+cov_matrix = np.cov(X_standardized, rowvar=False)
+print(cov_matrix)
+
+# Calculate the eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+print(eigenvalues)
+
+# Sort eigenvectors by decreasing eigenvalues
+sorted_indices = np.argsort(eigenvalues)[::-1]
+eigenvalues = eigenvalues[sorted_indices]
+eigenvectors = eigenvectors[:, sorted_indices]
+
+print(eigenvectors)
+
+# Project the data onto the first two principal components
+X_pca = X_standardized.dot(eigenvectors[:, :2])
+# Create a scatter plot
+plt.scatter(X_pca[:,0], X_pca[:,1], c = y )
+plt.title('Scatter Plot of Iris Dataset in 2D PCA Space')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.show()
