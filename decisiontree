@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df = pd.read_csv('/content/zoo_data(For Decision Tree Program).csv')
+df.head()
+
+x = df.iloc[: , 1:]
+y = df.iloc[: ,0]
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+x_train , x_test ,y_train , y_test= train_test_split(x,y)
+#clf = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=15,max_leaf_nodes=20)
+clf = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=15)
+clf.fit(x_train,y_train)
+DecisionTreeClassifier(criterion='entropy', max_depth=15)
+
+from sklearn import tree
+plt.figure(figsize = (10,10))
+tree.plot_tree(clf , filled = True)
