@@ -1,0 +1,59 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Step 1: Load the dataset
+data = pd.read_csv('/content/Food-Truck-LineReg.csv', header=None, names=['X', 'Y'])
+
+# Step 3: Calculate the correlation matrix
+correlation_matrix = data.corr()
+print('Correlation Matrix:')
+print(correlation_matrix)
+
+# Step 4: Perform linear regression
+X = data['X'].values.reshape(-1, 1)
+y = data['Y'].values
+regression_model = LinearRegression()
+regression_model.fit(X, y)
+
+# Step 5: Calculate Cost, SSE, SSR, SST, and R-squared (R2)
+y_pred = regression_model.predict(X)
+
+# Cost (Mean Squared Error)
+cost = mean_squared_error(y, y_pred)
+
+# SSE (Sum of Squared Errors)
+sse = np.sum((y - y_pred) ** 2)
+
+# SSR (Sum of Squared Regression)
+ssr = np.sum((y_pred - np.mean(y)) ** 2)
+
+# SST (Total Sum of Squares)
+sst = np.sum((y - np.mean(y)) ** 2)
+
+# R-squared (R2)
+r2 = r2_score(y, y_pred)
+
+print('Cost (Mean Squared Error):', cost)
+print('SSE (Sum of Squared Errors):', sse)
+print('SSR (Sum of Squared Regression):', ssr)
+print('SST (Total Sum of Squares):', sst)
+print('R-squared (R2):', r2)
+
+# Regression Parameters
+slope = regression_model.coef_[0]
+intercept = regression_model.intercept_
+print('Regression Parameters:')
+print('Slope (Theta1):', slope)
+print('Intercept (Theta0):', intercept)
+
+# Plotting the data points and regression line
+plt.scatter(X, y, color='blue', label='Data Points')
+plt.plot(X, y_pred, color='red', linewidth=2, label='Linear Regression Line')
+plt.xlabel('Population of City in 10,000s')
+plt.ylabel('Profit in $10,000s')
+plt.title('Food Truck Profit Prediction')
+plt.legend()
+plt.show()
