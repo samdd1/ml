@@ -1,0 +1,54 @@
+import math
+arr=[115.3, 195.5, 120.5, 110.2, 90.4, 105.6, 110.9, 116.3, 122.3, 125.4,122.3]
+def mean(arr):
+    mean=sum(arr)/len(arr)
+    print(mean)
+mean(arr)
+
+def median(arr):
+    arr.sort()
+    if len(arr) % 2 == 1:
+        return arr[len(arr) // 2]
+    else:
+        return (arr[len(arr) // 2 - 1] + arr[len(arr) // 2]) / 2
+median(arr)
+
+from collections import Counter
+def mode(arr):
+    counts = Counter(arr)
+    max_count = max(counts.values())
+    modes = [key for key, value in counts.items() if value == max_count]
+    return(modes)
+result = mode(arr)
+print("Mode:", result)
+Mode: [122.3]
+def sd(arr):
+    n = len(arr)
+    mean = sum(arr) / n
+    squared_diff = sum((x - mean) ** 2 for x in arr)
+    variance = squared_diff / n
+    std_deviation = math.sqrt(variance)
+
+    return std_deviation
+sd(arr)
+
+def normalization(arr):
+    max_arr=max(arr)
+    min_arr=min(arr)
+    normal=[]
+    for x in arr:
+        calc=(x-min_arr)/(max_arr-min_arr)
+        normal.append(calc)
+    print (normal)
+normalization(arr)
+
+def standardization(arr):
+    length=len(arr)
+    mean=sum(arr)/length
+    k=sd(arr)
+    standard=[]
+    for x in arr:
+        calc=(x-mean)/k
+        standard.append(calc)
+    print (standard)
+standardization(arr)
