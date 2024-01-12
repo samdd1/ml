@@ -1,0 +1,152 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, f1_score, confusion_matrix
+import matplotlib.pyplot as plt
+
+# Load the dataset
+df = pd.read_csv('/content/pima(For Random Forest Program) (2).csv')
+
+# Extract features (X) and target variable (y)
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+
+# Split the dataset into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build and train Decision Tree model
+dt = DecisionTreeClassifier()
+dt.fit(x_train, y_train)
+
+# Build and train Random Forest model
+rf = RandomForestClassifier(n_estimators=30)
+rf.fit(x_train, y_train)
+
+# Predictions on training set
+dt_train_predictions = dt.predict(x_train)
+rf_train_predictions = rf.predict(x_train)
+
+# Predictions on testing set
+dt_test_predictions = dt.predict(x_test)
+rf_test_predictions = rf.predict(x_test)
+
+# Evaluate Decision Tree on training set
+dt_train_accuracy = accuracy_score(y_train, dt_train_predictions)
+dt_train_precision = precision_score(y_train, dt_train_predictions)
+dt_train_f1 = f1_score(y_train, dt_train_predictions)
+dt_train_conf_matrix = confusion_matrix(y_train, dt_train_predictions)
+
+# Evaluate Decision Tree on testing set
+dt_test_accuracy = accuracy_score(y_test, dt_test_predictions)
+dt_test_precision = precision_score(y_test, dt_test_predictions)
+dt_test_f1 = f1_score(y_test, dt_test_predictions)
+dt_test_conf_matrix = confusion_matrix(y_test, dt_test_predictions)
+
+# Evaluate Random Forest on training set
+rf_train_accuracy = accuracy_score(y_train, rf_train_predictions)
+rf_train_precision = precision_score(y_train, rf_train_predictions)
+rf_train_f1 = f1_score(y_train, rf_train_predictions)
+rf_train_conf_matrix = confusion_matrix(y_train, rf_train_predictions)
+
+# Evaluate Random Forest on testing set
+rf_test_accuracy = accuracy_score(y_test, rf_test_predictions)
+rf_test_precision = precision_score(y_test, rf_test_predictions)
+rf_test_f1 = f1_score(y_test, rf_test_predictions)
+rf_test_conf_matrix = confusion_matrix(y_test, rf_test_predictions)
+
+# Print the results for Decision Tree
+print("Decision Tree - Training Set:")
+print(f"Accuracy: {dt_train_accuracy:.4f}")
+print(f"Precision: {dt_train_precision:.4f}")
+print(f"F1 Score: {dt_train_f1:.4f}")
+print("Confusion Matrix:")
+print(dt_train_conf_matrix)
+
+print("\nDecision Tree - Testing Set:")
+print(f"Accuracy: {dt_test_accuracy:.4f}")
+print(f"Precision: {dt_test_precision:.4f}")
+print(f"F1 Score: {dt_test_f1:.4f}")
+print("Confusion Matrix:")
+print(dt_test_conf_matrix)
+
+# Print the results for Random Forest
+print("\nRandom Forest - Training Set:")
+print(f"Accuracy: {rf_train_accuracy:.4f}")
+print(f"Precision: {rf_train_precision:.4f}")
+print(f"F1 Score: {rf_train_f1:.4f}")
+print("Confusion Matrix:")
+print(rf_train_conf_matrix)
+
+print("\nRandom Forest - Testing Set:")
+print(f"Accuracy: {rf_test_accuracy:.4f}")
+print(f"Precision: {rf_test_precision:.4f}")
+print(f"F1 Score: {rf_test_f1:.4f}")
+print("Confusion Matrix:")
+print(rf_test_conf_matrix)
+
+# Visualize Confusion Matrices for Decision Tree
+plt.figure(figsize=(18, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(dt_train_conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title('Confusion Matrix - Decision Tree (Training Set)')
+plt.colorbar()
+plt.xticks([0, 1], ['Predicted 0', 'Predicted 1'])
+plt.yticks([0, 1], ['Actual 0', 'Actual 1'])
+plt.xlabel('True label')
+plt.ylabel('Predicted label')
+
+plt.subplot(2, 2, 2)
+plt.imshow(dt_test_conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title('Confusion Matrix - Decision Tree (Testing Set)')
+plt.colorbar()
+plt.xticks([0, 1], ['Predicted 0', 'Predicted 1'])
+plt.yticks([0, 1], ['Actual 0', 'Actual 1'])
+plt.xlabel('True label')
+plt.ylabel('Predicted label')
+
+# Visualize Confusion Matrices for Random Forest
+plt.subplot(2, 2, 3)
+plt.imshow(rf_train_conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title('Confusion Matrix - Random Forest (Training Set)')
+plt.colorbar()
+plt.xticks([0, 1], ['Predicted 0', 'Predicted 1'])
+plt.yticks([0, 1], ['Actual 0', 'Actual 1'])
+plt.xlabel('True label')
+plt.ylabel('Predicted label')
+
+plt.subplot(2, 2, 4)
+plt.imshow(rf_test_conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title('Confusion Matrix - Random Forest (Testing Set)')
+plt.colorbar()
+plt.xticks([0, 1], ['Predicted 0', 'Predicted 1'])
+plt.yticks([0, 1], ['Actual 0', 'Actual 1'])
+plt.xlabel('True label')
+plt.ylabel
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# Load the dataset
+df = pd.read_csv('/content/pima(For Random Forest Program) (2).csv')
+
+# Extract features (X) and target variable (y)
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+
+# Split the dataset into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build and train Decision Tree model
+dt = DecisionTreeClassifier()
+dt.fit(x_train, y_train)
+
+# Visualize the Decision Tree
+plt.figure(figsize=(15, 10))
+plot_tree(dt, filled=True, feature_names=X.columns, class_names=['0', '1'], rounded=True, fontsize=10)
+plt.title('Decision Tree Visualization')
+plt.show()
